@@ -1,0 +1,27 @@
+# LeetCode-Daily-Coding-Challenge
+
+
+
+class MyHashSet {
+private:
+    std::unordered_map<int, bool> mp;
+
+public:
+    MyHashSet() {
+    }
+
+    void add(int key) {
+        mp[key] = true;
+    }
+
+    void remove(int key) {
+        mp[key] = false;
+    }
+
+    bool contains(int key) {
+        return mp[key];
+    }
+};
+
+
+BY:ABHAY GUPTA
