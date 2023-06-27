@@ -1,0 +1,50 @@
+# LeetCode-Daily-Coding-Challenge
+
+
+class Solution {
+public:
+    using int2 = pair<int, int>;
+    struct PairHash {
+        size_t operator () (const int2& p) const {
+            return  hash<int>{}(p.first) ^ p.second;
+        }
+    };
+
+    vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) 
+    {
+        int n1 = nums1.size(), n2 = nums2.size();
+        function<bool(vector<int>&, vector<int>&)> 
+        cmp = [](vector<int>& x, vector<int>& y) -> bool
+        { 
+            return (x[0] + x[1]) > (y[0] + y[1]); 
+        };
+        priority_queue<vector<int>, vector<vector<int>>, decltype(cmp)> pq(cmp);
+        vector<vector<int>> ans;
+        ans.reserve(k);
+        unordered_set<int2, PairHash> visited;
+        pq.push({nums1[0], nums2[0], 0, 0});
+        visited.insert({0, 0});
+        while (!pq.empty()) {
+            vector<int> x = pq.top();
+            pq.pop();
+            int p0 = x[0], p1 = x[1], i = x[2], j = x[3];
+            k--;
+            ans.push_back({p0, p1});
+            if (k == 0) return ans;
+            vector<vector<int>> adj = {{i+1, j}, {i, j+1}};
+            if (i + 1 < n1 && visited.count({i + 1, j}) == 0) {
+                pq.push({nums1[i + 1], nums2[j], i + 1, j});
+                visited.insert({i + 1, j});
+            } 
+            if (j + 1 < n2 && visited.count({i, j + 1}) == 0) {
+                pq.push({nums1[i], nums2[j + 1], i, j + 1});
+                visited.insert({i, j + 1});
+            } 
+        }
+        return ans;
+    }
+};
+
+
+
+Ps:Abhay Gupta
