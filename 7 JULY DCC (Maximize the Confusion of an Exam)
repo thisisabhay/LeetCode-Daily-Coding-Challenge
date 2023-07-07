@@ -1,0 +1,48 @@
+# LeetCode-Daily-Coding-Challenge
+
+
+
+class Solution {
+public:
+    int maxConsecutiveAnswers(string nums, int k) {
+            int ans1=0,ans2=0;
+      int n=nums.size();
+      int i=0,j=0;
+      int t=0,f=0;
+       while(j<n){
+          while(j<n && t<=k){
+              if(nums[j]=='T') t++;
+              if(t<=k){
+                  ans1=max(ans1,j-i+1);
+                  
+              }
+              j++;
+          }
+          while(i<=j && t>k){
+              if(nums[i]=='T') t--;
+              i++;
+          }
+      }
+      j=0;
+      i=0;
+       while(j<n){
+          while(j<n && f<=k){
+              if(nums[j]=='F') f++;
+              if(f<=k){
+                  ans2=max(ans2,j-i+1);
+                  
+              }
+              j++;
+          }
+          while(i<=j && f>k){
+              if(nums[i]=='F') f--;
+              i++;
+          }
+      }
+     if(ans1>ans2) return ans1;
+     else return ans2;
+    }
+};
+
+
+BY:Abhay Gupta
